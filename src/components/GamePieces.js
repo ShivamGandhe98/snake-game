@@ -16,7 +16,7 @@ const GamePieces = ({score, setScore, onGameOver}) => {
         const drawSnake = () => {
             snake.forEach((snakePark) => {
                 ctx.beginPath();
-                ctx.rect(snakePark.x, snakePark.y, 20, 20);
+                ctx.roundRect(snakePark.x, snakePark.y, 20, 20, 5);
                 ctx.fillStyle = "green";
                 ctx.fill();
                 ctx.closePath();
@@ -25,7 +25,7 @@ const GamePieces = ({score, setScore, onGameOver}) => {
 
         const drawApple = () => {
             ctx.beginPath();
-                ctx.rect(apple.x, apple.y, 20, 20);
+                ctx.roundRect(apple.x, apple.y, 20, 20, 10);
                 ctx.fillStyle = "red";
                 ctx.fill();
                 ctx.closePath();
@@ -33,7 +33,7 @@ const GamePieces = ({score, setScore, onGameOver}) => {
 
         const drawPoisonFruit = () => {
             ctx.beginPath();
-                ctx.rect(poisonFruit.x, poisonFruit.y, 20, 20);
+                ctx.roundRect(poisonFruit.x, poisonFruit.y, 20, 20, 10);
                 ctx.fillStyle = "black";
                 ctx.fill();
                 ctx.closePath();
@@ -111,6 +111,12 @@ const GamePieces = ({score, setScore, onGameOver}) => {
                     x: newSnake[newSnake.length - 1].x,
                     y: newSnake[newSnake.length - 1].y
                 })
+                setPoisonFruit({
+                    x: 
+                    Math.floor((Math.random() * canvas.width) / SNAKE_SPEED) * SNAKE_SPEED,
+                    y: 
+                    Math.floor((Math.random() * canvas.height) / SNAKE_SPEED) * SNAKE_SPEED,
+                })
             }
         }
 
@@ -146,29 +152,15 @@ const GamePieces = ({score, setScore, onGameOver}) => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawSnake();
             drawApple();
+            drawPoisonFruit();
             moveSnake();
         }, 100)
-        // const generatePoisonFruitInterval  = setInterval(() => {
-        //     drawPoisonFruit();
-        //     setPoisonFruit({
-        //         x: 
-        //         Math.floor((Math.random() * canvas.width) / SNAKE_SPEED) * SNAKE_SPEED,
-        //         y: 
-        //         Math.floor((Math.random() * canvas.height) / SNAKE_SPEED) * SNAKE_SPEED,
-        //     });
-        // },5000)
-            
-        // setTimeout(() => {
-        //     drawPoisonFruit();
-        // }, 5000)
         
         return () => {
             clearInterval(interval);
-            // git clearInterval(generatePoisonFruitInterval);
         };
     }, [snake, direction])
     
-
     return (
         <div>
             <canvas className="gameCanvas" ref={canvasRef} width={750} height={420} />

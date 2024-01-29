@@ -9,12 +9,10 @@ const GameState = () => {
     
     const handleGameOver = (type) => {
         setGameOver(true);
-
         if(score > highScore){
             setHighScore(score);
             localStorage.setItem("highScore", score.toString())
         }
-
         setCollisionType(type);
     }
 
@@ -29,18 +27,19 @@ const GameState = () => {
                 handleResetGame();
             }
         }
-
         window.addEventListener("keydown", handleKeyPress);
     }, [gameOver])
 
     return (
         <div className="score">
-            <p>Score: {score}</p>
+            <p>Your Score: {score}</p>
             <p>High Score: {highScore}</p>
             {
                 gameOver && (
                     <div>
-                        <p>Game Over! {collision === "wall" ? "You Hit the wall" : "You ate yourself"}!</p>
+                        <p>Game Over! {
+                        collision === "wall" ? "You Hit the wall" : collision === "self" ? "You ate yourself" : "You ate poison fruit"
+                        }!</p>
                         <p>Please press Enter to reset the game</p>
                     </div>
                 )
